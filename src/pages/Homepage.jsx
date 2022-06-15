@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Card from "../components/Card";
 import Layout from "../components/Layout";
 import "../styles/App.css";
+import axios from "axios";
 
-export class App extends Component {
+export class Homepage extends Component {
   state = {
     data: [
       {
@@ -39,12 +40,46 @@ export class App extends Component {
     ],
   };
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData2() {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    fetch(
+      "https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=1",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  }
+
+  fetchData() {
+    axios
+      .get(
+        "https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=1"
+      )
+      .then((res) => {
+        const { results } = res.data;
+        this.setState({ data: results });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => this.setState({ loading: false }));
+  }
+
   render() {
     return (
       <Layout>
-        <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 p-5 shadow-2xl shadow-black">
           {this.state.data.map((item, index) => (
-            <Card key={index} img={item.img} title={item.title} />
+            <Card key={index} img={item.poster_path} title={item.title} />
+            //poster_path
           ))}
         </div>
       </Layout>
@@ -52,4 +87,4 @@ export class App extends Component {
   }
 }
 
-export default App;
+export default Homepage;
