@@ -3,10 +3,12 @@ import Card from "../components/Card";
 import Layout from "../components/Layout";
 import "../styles/App.css";
 import axios from "axios";
+import { withRouter } from "../utils/Navigation";
 
 export class Homepage extends Component {
   state = {
     data: [
+      /*
       {
         id: 1,
         title: "The Bad Guys",
@@ -36,7 +38,7 @@ export class Homepage extends Component {
         id: 6,
         title: "Birds Like Us",
         img: "https://lk21.live/wp-content/uploads/2022/02/Birds-Like-Us-2022-170x255.jpg",
-      },
+      },*/
     ],
   };
 
@@ -76,9 +78,14 @@ export class Homepage extends Component {
   render() {
     return (
       <Layout>
-        <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-5 p-5 shadow-2xl shadow-black">
+        <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6 shadow-2xl shadow-black">
           {this.state.data.map((item, index) => (
-            <Card key={index} img={item.poster_path} title={item.title} />
+            <Card
+              key={item.id}
+              img={item.poster_path}
+              title={item.title}
+              onClickItem={() => this.props.navigate(`detail/${item.id}`)}
+            />
             //poster_path
           ))}
         </div>
@@ -87,4 +94,4 @@ export class Homepage extends Component {
   }
 }
 
-export default Homepage;
+export default withRouter(Homepage);
