@@ -1,97 +1,76 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import Layout from "../components/Layout";
 import "../styles/App.css";
 import axios from "axios";
 import { withRouter } from "../utils/Navigation";
+import Button from "../components/Button";
 
-export class Homepage extends Component {
-  state = {
-    data: [
-      /*
-      {
-        id: 1,
-        title: "The Bad Guys",
-        img: "https://lk21.live/wp-content/uploads/2022/05/The-Bad-Guys-2022-170x255.jpg",
-      },
-      {
-        id: 2,
-        title: "Turning Red",
-        img: "https://lk21.live/wp-content/uploads/2022/03/Turning-Red-2022-170x255.jpg",
-      },
-      {
-        id: 3,
-        title: "Encanto",
-        img: "https://lk21.live/wp-content/uploads/2022/03/Encanto-2021-170x255.jpg",
-      },
-      {
-        id: 4,
-        title: "Sing 2",
-        img: "https://lk21.live/wp-content/uploads/2022/02/Sing-2-170x255.jpg",
-      },
-      {
-        id: 5,
-        title: "Dogtown 2",
-        img: "https://lk21.live/wp-content/uploads/2022/02/Dogtown-2-2022-170x255.jpg",
-      },
-      {
-        id: 6,
-        title: "Birds Like Us",
-        img: "https://lk21.live/wp-content/uploads/2022/02/Birds-Like-Us-2022-170x255.jpg",
-      },*/
-    ],
-  };
+const Homepage = (props) => {
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const [page, setPage] = useState(2);
 
-  componentDidMount() {
-    this.fetchData();
-  }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  fetchData2() {
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
-    fetch(
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=1",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
-  }
+  useEffect(() => {}, [page]);
 
-  fetchData() {
+  function fetchData() {
     axios
       .get(
         "https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=1"
       )
       .then((res) => {
         const { results } = res.data;
-        this.setState({ data: results });
+        setData(results);
       })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => this.setState({ loading: false }));
+      .catch((err) => alert(err.toString()))
+      .finally(() => ({ loading: false }));
   }
 
-  render() {
-    return (
-      <Layout>
-        <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6 shadow-2xl shadow-black">
-          {this.state.data.map((item, index) => (
-            <Card
-              key={item.id}
-              img={item.poster_path}
-              title={item.title}
-              onClickItem={() => this.props.navigate(`detail/${item.id}`)}
-            />
-            //poster_path
-          ))}
-        </div>
-      </Layout>
-    );
+  function fetchData2() {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const newPage = page + 1;
+    fetch(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=${page}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        const { results } = res;
+        const temp = data.slice();
+        temp.push(...results);
+        setData(temp);
+        setPage(newPage);
+      })
+      .catch((err) => alert(err.toString()));
+    //.finally(() => ({ loading: false }));
   }
-}
+
+  return (
+    <Layout>
+      <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6 bg-gray-200">
+        {data.map((item) => (
+          <Card
+            key={item.id}
+            img={item.poster_path}
+            title={item.title}
+            onClickItem={() => navigate(`detail/${item.id}`)}
+          />
+        ))}
+      </div>
+
+      <Button onClick={() => fetchData2()}></Button>
+    </Layout>
+  );
+};
 
 export default withRouter(Homepage);
