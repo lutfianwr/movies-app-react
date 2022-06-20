@@ -6,17 +6,34 @@ import "../styles/App.css";
 import axios from "axios";
 import { withRouter } from "../utils/Navigation";
 import Button from "../components/Button";
+import { reduxAction } from "../utils/redux/actions/action";
+import { useDispatch } from "react-redux/es/exports";
 
 const Homepage = (props) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [page, setPage] = useState(2);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
   }, []);
 
   useEffect(() => {}, [page]);
+
+  const handleFavorite = (item) => {
+    const temp = localStorage.getItem("favorite");
+    if (temp) {
+      const tempData = JSON.parse(temp);
+      tempData.push(item);
+      localStorage.setItem("favorite", JSON.stringify(tempData));
+      dispatch(reduxAction("SET_FAVORITES", tempData));
+    } else {
+      localStorage.setItem("favorite", JSON.stringify([item]));
+      dispatch(reduxAction("SET_FAVORITES", [item]));
+    }
+    alert("Added to favorite");
+  };
 
   function fetchData() {
     axios
@@ -64,6 +81,7 @@ const Homepage = (props) => {
             img={item.poster_path}
             title={item.title}
             onClickItem={() => navigate(`detail/${item.id}`)}
+            onClickFavorite={() => handleFavorite(item)}
           />
         ))}
       </div>

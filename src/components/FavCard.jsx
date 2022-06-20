@@ -1,6 +1,6 @@
 //import React, { Component } from "react";
 
-const Card = (props) => {
+const FavCard = (props) => {
   return (
     <>
       <div className="container grow flex flex-col justify-between rounded-lg shadow-xl">
@@ -35,7 +35,7 @@ const Card = (props) => {
             onClick={props.onClickFavorite}
             className="bg-rose-500 hover:bg-rose-400 text-rose-100 hover:text-white text-xs py-2 px-4 w-full border-b-4 border-rose-700 hover:border-rose-500 rounded-b-lg"
           >
-            Add to Favorite
+            Remove from Favorite
           </button>
         </div>
       </div>
@@ -43,4 +43,4 @@ const Card = (props) => {
   );
 };
 
-export default Card;
+export default FavCard;
