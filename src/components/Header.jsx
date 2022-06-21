@@ -1,11 +1,23 @@
-//import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../utils/context";
+import React, { useContext } from "react";
+import { FaSun, FaMoon } from "react-icons/fa";
+import { BiCameraMovie } from "react-icons/bi";
 
-const header = (props) => {
+const Header = (props) => {
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  const handleThemeChange = (mode) => {
+    setTheme(mode);
+  };
+
   return (
     <>
-      <nav className="sticky top-0 flex items-center justify-between flex-wrap bg-amber-500 p-4">
+      <nav className="sticky top-0 flex items-center justify-between flex-wrap bg-yellow-500 p-4">
         <div className="flex items-center flex-shrink-0 text-white mr-4">
+          <div className="p-2">
+            <BiCameraMovie />
+          </div>
           <div>
             <Link className="text-sm lg:flex-grow " to="/">
               <span className="font-semibold text-xl tracking-tight">
@@ -14,37 +26,37 @@ const header = (props) => {
             </Link>
           </div>
         </div>
-        <div className="block lg:hidden">
-          <button className="flex items-center px-3 py-2 border rounded text-amber-200 border-amber-300 hover:text-white hover:border-white">
-            <svg
-              className="fill-current h-3 w-3"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Menu</title>
-              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto ">
-          <div className="text-sm lg:flex-grow ">
-            <div className="block mt-4 lg:inline-block lg:mt-0 text-amber-200 hover:text-white mr-4">
-              <Link className="text-sm lg:flex-grow " to="/">
+        <div className="w-full block flex-grow  sm:items-center w-auto ">
+          <div className="text-sm flex ">
+            <div className="block sm:inline-block lg:mt-0 text-yellow-100 hover:text-white mr-4">
+              <Link className="text-sm md:flex-grow " to="/">
                 Home
               </Link>
             </div>
 
-            <div className="block mt-4 lg:inline-block lg:mt-0 text-amber-200 hover:text-white">
-              <Link className="text-sm lg:flex-grow " to="/favorites">
+            <div className="block sm:inline-block lg:mt-0 text-yellow-100 hover:text-white">
+              <Link className="text-sm sm:flex-grow " to="/favorites">
                 My Favorite
               </Link>
             </div>
           </div>
+        </div>
+        <div className="block sm:inline-block cursor-pointer">
+          {theme === "dark" ? (
+            <FaSun
+              className="w-8 h-8 text-white "
+              onClick={() => handleThemeChange("light")}
+            />
+          ) : (
+            <FaMoon
+              className="w-8 h-8 text-white"
+              onClick={() => handleThemeChange("dark")}
+            />
+          )}
         </div>
       </nav>
     </>
   );
 };
 
-export default header;
+export default Header;

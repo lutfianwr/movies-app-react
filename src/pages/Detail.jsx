@@ -8,8 +8,7 @@ const Detail = (props) => {
 
   useEffect(() => {
     fetchData();
-  });
-  //},[]);
+  }, []);
 
   function fetchData() {
     const { movie_id } = props.params;
@@ -32,18 +31,18 @@ const Detail = (props) => {
       <div
         className="p-5 bg-cover bg-center bg-no-repeat"
         style={{
-          "background-image": `url(https://image.tmdb.org/t/p/original/${data.backdrop_path})`,
+          backgroundImage: `url(https://image.tmdb.org/t/p/original/${data.backdrop_path})`,
         }}
       >
         <div className="flex justify-center">
-          <div className="md:flex flex-row max-w-5xl rounded-lg bg-white shadow-lg bg-opacity-75">
+          <div className="md:flex flex-row max-w-5xl rounded-lg bg-white dark:bg-gradient-to-t from-black via-neutral-800 dark:text-neutral-200 shadow-lg bg-opacity-50">
             <img
               className="rounded-lg p-5"
               src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
               alt=""
             />
             <div className="p-6 flex flex-col">
-              <div className="text-gray-900 text-3xl font-medium mb-2">
+              <div className=" text-gray-900 dark:text-neutral-200 text-3xl font-medium mb-2">
                 <div className="font-extrabold">{data.title}</div>
               </div>
               <div className="my-3 font-bold">

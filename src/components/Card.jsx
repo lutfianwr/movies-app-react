@@ -18,13 +18,13 @@ const Card = (props) => {
 
           <button
             onClick={props.onClickItem}
-            className="bg-amber-500 hover:bg-amber-400 text-amber-100 hover:text-white text-xs py-2 px-4 w-full "
+            className=" bg-yellow-500 hover:bg-yellow-400 text-yellow-100 hover:text-white text-xs py-2 px-4 w-full "
           >
             Detail
           </button>
         </div>
 
-        <div className="py-4 px-2 bg-white h-full">
+        <div className="py-4 px-2 dark:bg-neutral-600 dark:text-gray-200 bg-white h-full">
           <div className="font-bold text-xl mb-2 text-center">
             {props.title}
           </div>

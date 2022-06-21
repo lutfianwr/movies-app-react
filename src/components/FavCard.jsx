@@ -18,13 +18,13 @@ const FavCard = (props) => {
 
           <button
             onClick={props.onClickItem}
-            className="bg-amber-500 hover:bg-amber-400 text-amber-100 hover:text-white text-xs py-2 px-4 w-full "
+            className="bg-yellow-500 hover:bg-yellow-400 text-amber-100 hover:text-white text-xs py-2 px-4 w-full "
           >
             Detail
           </button>
         </div>
 
-        <div className="py-4 px-2 bg-white h-full">
+        <div className="py-4 px-2 dark:bg-neutral-600 dark:text-gray-200 bg-white h-full">
           <div className="font-bold text-xl mb-2 text-center">
             {props.title}
           </div>
@@ -32,8 +32,8 @@ const FavCard = (props) => {
 
         <div className="">
           <button
-            onClick={props.onClickFavorite}
-            className="bg-rose-500 hover:bg-rose-400 text-rose-100 hover:text-white text-xs py-2 px-4 w-full border-b-4 border-rose-700 hover:border-rose-500 rounded-b-lg"
+            onClick={props.onClickRemove}
+            className="bg-slate-500 hover:bg-slate-400 text-slate-100 hover:text-white text-xs py-2 px-4 w-full border-b-4 border-slate-700 hover:border-slate-500 rounded-b-lg"
           >
             Remove from Favorite
           </button>

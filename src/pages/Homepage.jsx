@@ -23,6 +23,16 @@ const Homepage = (props) => {
 
   const handleFavorite = (item) => {
     const temp = localStorage.getItem("favorite");
+
+    if (temp) {
+      const tempData = JSON.parse(temp);
+      const find = tempData.find((data) => data.id === item.id);
+      if (find) {
+        alert("The Movie is already in favorite");
+        return;
+      }
+    }
+
     if (temp) {
       const tempData = JSON.parse(temp);
       tempData.push(item);
@@ -74,7 +84,7 @@ const Homepage = (props) => {
 
   return (
     <Layout>
-      <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6 bg-gray-200">
+      <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6  ">
         {data.map((item) => (
           <Card
             key={item.id}

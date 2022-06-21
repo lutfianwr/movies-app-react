@@ -1,15 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import Header from "./Header";
 
-export class Layout extends Component {
-  render() {
-    return (
-      <>
-        <Header />
-        <div>{this.props.children}</div>
-      </>
-    );
-  }
-}
+const Layout = (props) => {
+  return (
+    <div className="h-screen w-full bg-gray-200 dark:bg-neutral-800 transition-all overflow-auto">
+      <Header />
+      <div>{props.children}</div>
+    </div>
+  );
+};
 
 export default Layout;
