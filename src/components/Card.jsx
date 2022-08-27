@@ -3,39 +3,29 @@
 const Card = (props) => {
   return (
     <>
-      <div className="container grow flex flex-col justify-between rounded-lg shadow-xl">
-        <div>
-          <img
-            onClick={props.onClickItem}
-            className="max-w-full h-auto rounded-t-lg cursor-pointer"
-            src={
-              props.img
-                ? `https://image.tmdb.org/t/p/w500${props.img}`
-                : "https://via.placeholder.com/500x750?text=No+Image"
-            }
-            alt={props.img}
-          />
-
-          <button
-            onClick={props.onClickItem}
-            className=" bg-yellow-500 hover:bg-yellow-400 text-yellow-100 hover:text-white text-xs py-2 px-4 w-full "
-          >
-            Detail
-          </button>
-        </div>
-
-        <div className="py-4 px-2 dark:bg-neutral-600 dark:text-gray-200 bg-white h-full">
-          <div className="font-bold text-xl mb-2 text-center">
-            {props.title}
+      <div className="container grow flex flex-col justify-between shadow-xl">
+        <div className="content cursor-pointer" onClick={props.onClickItem}>
+          <div>
+            <img
+              className="max-w-full md:h-96"
+              src={
+                props.img
+                  ? `https://image.tmdb.org/t/p/w500${props.img}`
+                  : "https://via.placeholder.com/500x750?text=No+Image"
+              }
+              alt={props.img}
+            />
+          </div>
+          <div className="p-2 dark:bg-neutral-900 dark:text-gray-200 bg-white h-24">
+            <div className="font-bold text-xl text-center">{props.title}</div>
           </div>
         </div>
-
-        <div className="">
+        <div>
           <button
             onClick={props.onClickFavorite}
-            className="bg-rose-500 hover:bg-rose-400 text-rose-100 hover:text-white text-xs py-2 px-4 w-full border-b-4 border-rose-700 hover:border-rose-500 rounded-b-lg"
+            className="bg-red-400 text-red-100 hover:bg-red-200 text-xs py-2 px-4 w-full border-b-4 border-red-700 hover:border-red-300 hover:text-black"
           >
-            Add to Favorite
+            &#x2764; Favorite
           </button>
         </div>
       </div>

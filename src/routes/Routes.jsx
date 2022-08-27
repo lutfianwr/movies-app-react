@@ -9,7 +9,7 @@ import { ThemeContext } from "../utils/context";
 
 const App = (props) => {
   const dispatch = useDispatch();
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const background = useMemo(() => ({ theme, setTheme }), [theme]);
 
   useEffect(() => {

@@ -14,7 +14,7 @@ const Detail = (props) => {
     const { movie_id } = props.params;
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/${movie_id}?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US`
+        `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
       )
       .then((res) => {
         const { data } = res;
@@ -35,9 +35,9 @@ const Detail = (props) => {
         }}
       >
         <div className="flex justify-center">
-          <div className="md:flex flex-row max-w-5xl rounded-lg bg-white dark:bg-gradient-to-t from-black via-neutral-800 dark:text-neutral-200 shadow-lg bg-opacity-50">
+          <div className="md:flex flex-row max-w-5xl bg-white dark:bg-gradient-to-b from-black to-neutral-500 via-neutral-800 dark:text-neutral-200 shadow-lg bg-opacity-80">
             <img
-              className="rounded-lg p-5"
+              className="p-5"
               src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
               alt=""
             />

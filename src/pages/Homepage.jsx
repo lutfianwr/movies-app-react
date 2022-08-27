@@ -48,7 +48,7 @@ const Homepage = (props) => {
   function fetchData() {
     axios
       .get(
-        "https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=1"
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`
       )
       .then((res) => {
         const { results } = res.data;
@@ -67,7 +67,7 @@ const Homepage = (props) => {
     };
     const newPage = page + 1;
     fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=4f83f12e304c26029c17884a1c9eb41a&language=en-US&page=${page}`,
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${page}`,
       requestOptions
     )
       .then((response) => response.json())
@@ -82,8 +82,28 @@ const Homepage = (props) => {
     //.finally(() => ({ loading: false }));
   }
 
+  const handleSearch = (e) => {
+    console.log(e);
+    if (e.keyCode === 13) {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${e.target.value}&page=1&include_adult=false`
+        )
+        .then((res) => {
+          const { results } = res.data;
+          setData(results);
+        })
+        .catch((err) => alert(err.toString()));
+    }
+  };
+
   return (
-    <Layout>
+    <Layout onKeyDown={(e) => handleSearch(e)}>
+      <div>
+        <div className="text-center font-bold text-3xl pt-4 dark:text-white">
+          Now Playing
+        </div>
+      </div>
       <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6  ">
         {data.map((item) => (
           <Card
