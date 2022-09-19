@@ -7,13 +7,14 @@ import axios from "axios";
 import { withRouter } from "../utils/Navigation";
 import Button from "../components/Button";
 import { reduxAction } from "../utils/redux/actions/action";
-import { useDispatch } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 
 const Homepage = (props) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [page, setPage] = useState(2);
   const dispatch = useDispatch();
+  const favorite = useSelector((state) => state.favorites);
 
   useEffect(() => {
     fetchData();
@@ -45,6 +46,15 @@ const Homepage = (props) => {
     alert("Added to favorite");
   };
 
+  const handleRemove = (item) => {
+    const temp = localStorage.getItem("favorite");
+    const tempData = JSON.parse(temp);
+    const tempFilter = tempData.filter((data) => data.id !== item.id);
+    localStorage.setItem("favorite", JSON.stringify(tempFilter));
+    alert("Removed from favorite");
+    dispatch(reduxAction("SET_FAVORITES", tempFilter));
+  };
+
   function fetchData() {
     axios
       .get(
@@ -53,12 +63,13 @@ const Homepage = (props) => {
       .then((res) => {
         const { results } = res.data;
         setData(results);
+        console.log(results);
       })
       .catch((err) => alert(err.toString()))
       .finally(() => ({ loading: false }));
   }
 
-  function fetchData2() {
+  function fetchMore() {
     const requestOptions = {
       method: "GET",
       headers: {
@@ -100,23 +111,27 @@ const Homepage = (props) => {
   return (
     <Layout onKeyDown={(e) => handleSearch(e)}>
       <div>
-        <div className="text-center font-bold text-3xl pt-4 dark:text-white">
+        <div className="text-center font-bold text-xl pt-4 dark:text-white">
           Now Playing
         </div>
       </div>
-      <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 p-6  ">
+      <div className="grid grid-flow-row auto-rows-max grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6 p-6  ">
         {data.map((item) => (
           <Card
             key={item.id}
             img={item.poster_path}
             title={item.title}
+            votes={item.vote_average}
+            year={item.release_date}
+            isFavorite={favorite.find((search) => search.id === item.id)}
             onClickItem={() => navigate(`detail/${item.id}`)}
             onClickFavorite={() => handleFavorite(item)}
+            onClickRemove={() => handleRemove(item)}
           />
         ))}
       </div>
 
-      <Button onClick={() => fetchData2()}></Button>
+      <Button onClick={() => fetchMore()}></Button>
     </Layout>
   );
 };

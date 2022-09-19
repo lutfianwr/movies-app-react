@@ -1,47 +1,41 @@
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../utils/context";
 import React, { useContext } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
-import { BiCameraMovie } from "react-icons/bi";
+import { TbMoonStars, TbSun } from "react-icons/tb";
 
 const Header = (props) => {
   const { theme, setTheme } = useContext(ThemeContext);
-
   const handleThemeChange = (mode) => {
     setTheme(mode);
   };
 
   return (
     <>
-      <nav className="sticky top-0 flex items-center justify-between flex-wrap bg-red-900 p-2 md:p-4 shadow-lg">
+      <nav className="z-50 sticky top-0 flex items-center justify-between flex-wrap bg-neutral-800 p-2 md:p-4 shadow-lg">
         <div className="flex items-center flex-shrink-0 text-white">
-          <div className="p-2">
-            <BiCameraMovie />
-          </div>
           <div>
-            <Link className="text-sm lg:flex-grow " to="/">
-              <span className="font-semibold text-2xl tracking-tight">
-                Movies<span className="text-red-500 font-bold">21</span>
+            <Link className="lg:flex-grow" to="/">
+              <span className="font-bold text-xl">
+                MOVIES
+                <span className="text-red-500 font-bold text-3xl">21</span>
               </span>
             </Link>
           </div>
-          <div className="block flex-grow sm:items-center w-auto">
+          <div className=" flex-grow sm:items-center w-auto  hidden md:block">
             <div className="flex font-bold text-white md:pl-4">
               <Link className="sm:flex-grow " to="/favorites">
-                My Favorites
+                Favorites
               </Link>
             </div>
-          </div>{" "}
-        </div>
-        <div className="text-center">
-          <input
-            type="text"
-            className="
-          w-24 md:w-72
+          </div>
+          <div className="text-center">
+            <input
+              type="text"
+              className="
+          w-24 md:w-72 mx-2 md:mx-6
           form-control
           block
           px-2
-          py-1
           text-sm
           font-normal
           text-gray-700
@@ -53,24 +47,29 @@ const Header = (props) => {
           m-0
           focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
         "
-            id="exampleFormControlInput3"
-            placeholder="Search"
-            onKeyDown={props.onKeyDown}
-          />
+              id="exampleFormControlInput3"
+              placeholder="Search"
+              onKeyDown={props.onKeyDown}
+            />
+          </div>
         </div>
         <div className="block sm:inline-block cursor-pointer md:px-4">
           {theme === "dark" ? (
-            <FaSun
-              className="w-8 h-8 text-white "
-              onClick={() => handleThemeChange("light")}
-            />
+            <div className="bg-white rounded-full p-2">
+              <TbSun
+                className="md:w-8 md:h-8 text-neutral-800"
+                onClick={() => handleThemeChange("light")}
+              />
+            </div>
           ) : (
-            <FaMoon
-              className="w-8 h-8 text-white"
-              onClick={() => handleThemeChange("dark")}
-            />
+            <div className="bg-neutral-800 rounded-full p-2 border-white border-2">
+              <TbMoonStars
+                className="md:w-7 md:h-7 text-white"
+                onClick={() => handleThemeChange("dark")}
+              />
+            </div>
           )}
-        </div>{" "}
+        </div>
       </nav>
     </>
   );

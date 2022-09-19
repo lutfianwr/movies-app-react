@@ -25,11 +25,12 @@ const Favorite = (props) => {
   return (
     <Layout>
       <div>
-        <div className="text-center font-bold text-3xl pt-4 dark:text-white">
+        <div className="text-center font-bold text-xl pt-4 dark:text-white">
           My Favorite
         </div>
       </div>
-      {localStorage.getItem("favorite") === "[]" ? (
+      {localStorage.getItem("favorite") === "[]" ||
+      !localStorage.getItem("favorite") ? (
         <div className="flex text-center h-screen justify-center items-center dark:text-white text-2xl">
           You don't have favorite Movie
         </div>
@@ -40,6 +41,8 @@ const Favorite = (props) => {
               key={item.id}
               img={item.poster_path}
               title={item.title}
+              year={item.release_date}
+              votes={item.vote_average}
               onClickItem={() => navigate(`detail/${item.id}`)}
               onClickRemove={() => handleRemove(item)}
             />
