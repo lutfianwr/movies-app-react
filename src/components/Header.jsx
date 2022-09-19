@@ -10,7 +10,7 @@ const Header = (props) => {
   };
 
   return (
-    <>
+    <div>
       <nav className="z-50 sticky top-0 flex items-center justify-between flex-wrap bg-neutral-800 p-2 md:p-4 shadow-lg">
         <div className="flex items-center flex-shrink-0 text-white">
           <div>
@@ -71,7 +71,7 @@ const Header = (props) => {
           )}
         </div>
       </nav>
-    </>
+    </div>
   );
 };
 
